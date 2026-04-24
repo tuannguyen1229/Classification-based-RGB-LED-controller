@@ -395,7 +395,7 @@ Partition Scheme: "Huge APP (3MB No OTA)"
 
 ### **Video Demo**
 
-[![Demo Video](https://drive.google.com/file/d/1akqUHzZEkO-JHRlOaAyYGQA5LtOoS_r4/view?usp=sharing)
+Video: [Google Drive](https://drive.google.com/file/d/1akqUHzZEkO-JHRlOaAyYGQA5LtOoS_r4/view?usp=sharing)
 
 ---
 
