@@ -144,8 +144,8 @@ This project implements a **touchless RGB LED control system** using hand gestur
 
 | Gesture | Action | Result |
 |---------|--------|--------|
-| `palm_down` (hand facing down) | Turn ON | LED RGB lights up|
-| `fist` (closed fist) | Turn OFF | LED RGB turns off |
+| `palm_down` (hand facing down) <br> <img src="https://github.com/tuannguyen1229/Classification-based-RGB-LED-controller/blob/main/docs/palm_down.jpg?raw=true" width="100"> | Turn ON | LED RGB lights up|
+| `fist` (closed fist) <br> <img src="https://github.com/tuannguyen1229/Classification-based-RGB-LED-controller/blob/main/docs/fist.jpg?raw=true" width="100"> | Turn OFF | LED RGB turns off |
 
 ---
 
@@ -155,7 +155,7 @@ This project implements a **touchless RGB LED control system** using hand gestur
 
 | Gesture | Action | Color Sequence |
 |---------|--------|----------------|
-| `palm_up` (hand facing up) | Change color | RED → YELLOW → BLUE → RED... |
+| `palm_up` (hand facing up) <br> <img src="https://github.com/tuannguyen1229/Classification-based-RGB-LED-controller/blob/main/docs/palm_up.jpg?raw=true" width="100"> | Change color | RED → YELLOW → BLUE → RED... |
 
 **Note**: Colors cycle continuously in order
 
@@ -167,13 +167,13 @@ This project implements a **touchless RGB LED control system** using hand gestur
 
 | Gesture | Action | Brightness Levels |
 |---------|--------|-------------------|
-| `finger_L` (thumb + index forming "L") | Change brightness | 3 progressive brightness steps |
+| `finger_L` (thumb + index forming "L") <br> <img src="https://github.com/tuannguyen1229/Classification-based-RGB-LED-controller/blob/main/docs/finger_L.jpg?raw=true" width="100">  | Change brightness | 3 progressive brightness steps |
 
 **Note**: System supports 3 incrementing brightness levels
 
 ---
 
-## 🤖 AI Model Development
+## AI Model Development
 
 ### **Step 1: Data Collection & Labeling**
 
@@ -187,15 +187,6 @@ This project implements a **touchless RGB LED control system** using hand gestur
   ├── palm_down
   └── palm_up
 ```
-
-**Sample Gestures**:
-
-| finger_L | fist | palm_down | palm_up |
-|----------|------|-----------|---------|
-| <img src="docs/gestures/finger_L.png" width="100"> | <img src="docs/gestures/fist.png" width="100"> | <img src="docs/gestures/palm_down.png" width="100"> | <img src="docs/gestures/palm_up.png" width="100"> |
-
----
-
 ### **Step 2: Data Preprocessing**
 
 ```yaml
@@ -279,7 +270,7 @@ Training Parameters:
 
 ---
 
-## 🚀 Installation & Setup
+## Installation & Setup
 
 ### **Prerequisites**
 
@@ -335,26 +326,50 @@ WS2812 Connection:
 ### **Step 3: Upload Code**
 
 ```cpp
-// Basic sketch structure
-#include <[your_project]_inferencing.h>
-#include <Adafruit_NeoPixel.h>
+#include <hand_gesture_1_inferencing.h>
+#include "edge-impulse-sdk/dsp/image/image.hpp"
 
-// Configure LED
-#define LED_PIN 2
-#define NUM_LEDS 1
-Adafruit_NeoPixel strip(NUM_LEDS, LED_PIN, NEO_GRB + NEO_KHZ800);
+#include "esp_camera.h"
+#include <String.h>
+// Select camera model - find more camera models in camera_pins.h file here
+// https://github.com/espressif/arduino-esp32/blob/master/libraries/ESP32/examples/Camera/CameraWebServer/camera_pins.h
 
-void setup() {
-  Serial.begin(115200);
-  strip.begin();
-  // Initialize camera & model
+// #define CAMERA_MODEL_ESP_EYE // Has PSRAM
+#define CAMERA_MODEL_AI_THINKER // Has PSRAM
+
+#if defined(CAMERA_MODEL_ESP_EYE)
+#define PWDN_GPIO_NUM    -1
+#define RESET_GPIO_NUM   -1
+#define XCLK_GPIO_NUM    4
+#define SIOD_GPIO_NUM    18
+#define SIOC_GPIO_NUM    23
+.....
+.....
+.....
+static int ei_camera_get_data(size_t offset, size_t length, float *out_ptr)
+{
+    // we already have a RGB888 buffer, so recalculate offset into pixel index
+    size_t pixel_ix = offset * 3;
+    size_t pixels_left = length;
+    size_t out_ptr_ix = 0;
+
+    while (pixels_left != 0) {
+        // Swap BGR to RGB here
+        // due to https://github.com/espressif/esp32-camera/issues/379
+        out_ptr[out_ptr_ix] = (snapshot_buf[pixel_ix + 2] << 16) + (snapshot_buf[pixel_ix + 1] << 8) + snapshot_buf[pixel_ix];
+
+        // go to the next pixel
+        out_ptr_ix++;
+        pixel_ix+=3;
+        pixels_left--;
+    }
+    // and done!
+    return 0;
 }
 
-void loop() {
-  // Capture image
-  // Run inference
-  // Control LED based on result
-}
+#if !defined(EI_CLASSIFIER_SENSOR) || EI_CLASSIFIER_SENSOR != EI_CLASSIFIER_SENSOR_CAMERA
+#error "Invalid model for current sensor"
+#endif
 ```
 
 **Upload Settings**:
@@ -380,7 +395,7 @@ Partition Scheme: "Huge APP (3MB No OTA)"
 
 ### **Video Demo**
 
-[![Demo Video](docs/demo/thumbnail.png)](https://youtu.be/your_video_link)
+[![Demo Video](https://drive.google.com/file/d/1akqUHzZEkO-JHRlOaAyYGQA5LtOoS_r4/view?usp=sharing)
 
 ---
 
