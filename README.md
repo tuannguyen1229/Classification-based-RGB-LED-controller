@@ -460,10 +460,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Contact
 
 **Tuan Nguyen**
-- GitHub: [@your-username](https://github.com/your-username)
-- Email: your.email@example.com
-- LinkedIn: [Your LinkedIn](https://linkedin.com/in/your-profile)
-
+- GitHub: [@tuannguyen1229](https://github.com/tuannguyen1229)
+- Email: nhutuannguyen2912@gmail.com
 ---
 
 <div align="center">
