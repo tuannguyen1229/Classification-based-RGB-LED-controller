@@ -393,7 +393,7 @@ Partition Scheme: "Huge APP (3MB No OTA)"
 | palm_up | <img src="docs/demo/palm_up_demo.gif" width="300"> |
 | finger_L | <img src="docs/demo/finger_L_demo.gif" width="300"> |
 
-### **Video Demo**
+### **Demo Video**
 
 Video: [Google Drive](https://drive.google.com/file/d/1akqUHzZEkO-JHRlOaAyYGQA5LtOoS_r4/view?usp=sharing)
 
