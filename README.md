@@ -381,18 +381,6 @@ Partition Scheme: "Huge APP (3MB No OTA)"
 ```
 
 ---
-
-## Demo
-
-### **Gesture Recognition in Action**
-
-| Gesture | LED Response |
-|---------|--------------|
-| palm_down | <img src="docs/demo/palm_down_demo.gif" width="300"> |
-| fist | <img src="docs/demo/fist_demo.gif" width="300"> |
-| palm_up | <img src="docs/demo/palm_up_demo.gif" width="300"> |
-| finger_L | <img src="docs/demo/finger_L_demo.gif" width="300"> |
-
 ### **Demo Video**
 
 Video: [Google Drive](https://drive.google.com/file/d/1akqUHzZEkO-JHRlOaAyYGQA5LtOoS_r4/view?usp=sharing)
